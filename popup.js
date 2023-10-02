@@ -6,20 +6,28 @@ async function getCurrentTab() {
   return tab;
 }
 
-const closeDuplicateTabsButton = document.getElementById("close-duplicates-btn");
-closeDuplicateTabsButton.addEventListener("click", async () => {
-  try {
+async function getDuplicateTabIds() {
     const currentTab = await getCurrentTab();
     if (!currentTab) {
-      return;
+      return [];
     }
 
     let duplicateTabs = await chrome.tabs.query({url: currentTab.url});
     let duplicateTabIds = duplicateTabs
       .filter(tab => tab.id !== currentTab.id)
       .map(tab => tab.id);
+    return duplicateTabIds;
+}
+
+const closeDuplicateTabsButton = document.getElementById("close-duplicates-btn");
+closeDuplicateTabsButton.addEventListener("click", async () => {
+  try {
+    const duplicateTabIds = await getDuplicateTabIds();
     await chrome.tabs.remove(duplicateTabIds);
   } catch (error) {
     console.error(error);
   }
 });
+
+const duplicateTabCount = (await getDuplicateTabIds()).length;
+closeDuplicateTabsButton.innerText = `Close duplicate tabs (${duplicateTabCount} duplicates)`;
