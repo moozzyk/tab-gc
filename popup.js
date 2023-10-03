@@ -26,7 +26,12 @@ async function getAllDuplicateTabs() {
       if (!tabMap.has(tab.url)) {
         tabMap.set(tab.url, []);
       }
-      tabMap.get(tab.url).push(tab.id);
+      if (tab.active) {
+        // Put active tab at the front of the list so it's not closed
+        tabMap.get(tab.url).unshift(tab.id);
+      } else {
+        tabMap.get(tab.url).push(tab.id);
+      }
     });
     return tabMap;
 }
