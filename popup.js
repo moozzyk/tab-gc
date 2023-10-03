@@ -36,12 +36,11 @@ closeDuplicateTabsButton.addEventListener("click", async () => {
   try {
     const duplicateTabIds = await getDuplicateTabIds();
     await chrome.tabs.remove(duplicateTabIds);
+    await updateDuplicateTabCount();
   } catch (error) {
     console.error(error);
   }
 });
-const duplicateTabCount = (await getDuplicateTabIds()).length;
-closeDuplicateTabsButton.innerText = `Close duplicate tabs (${duplicateTabCount} tabs)`;
 
 const closeAllDuplicateTabsButton = document.getElementById("close-all-duplicates-btn");
 closeAllDuplicateTabsButton.addEventListener("click", async () => {
@@ -52,14 +51,22 @@ closeAllDuplicateTabsButton.addEventListener("click", async () => {
       tabsToClose.push(...v.slice(1));
     });
     await chrome.tabs.remove(tabsToClose);
+    await updateDuplicateTabCount();
   } catch (error) {
     console.error(error);
   }
 });
 
-const duplicateTabMap = await getAllDuplicateTabs();
-let numDuplicateTabs = 0;
-duplicateTabMap.forEach((v) => {
-  numDuplicateTabs += v.length - 1;
-});
-closeAllDuplicateTabsButton.innerText = `Close all duplicate tabs (${numDuplicateTabs} tabs)`;
+async function updateDuplicateTabCount() {
+  const duplicateTabCount = (await getDuplicateTabIds()).length;
+  closeDuplicateTabsButton.innerText = `Close duplicate tabs (${duplicateTabCount} tabs)`;
+
+  const duplicateTabMap = await getAllDuplicateTabs();
+  let numDuplicateTabs = 0;
+  duplicateTabMap.forEach((v) => {
+    numDuplicateTabs += v.length - 1;
+  });
+  closeAllDuplicateTabsButton.innerText = `Close all duplicate tabs (${numDuplicateTabs} tabs)`;
+}
+
+await updateDuplicateTabCount();
