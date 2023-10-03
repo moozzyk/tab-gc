@@ -19,6 +19,18 @@ async function getDuplicateTabIds() {
     return duplicateTabIds;
 }
 
+async function getAllDuplicateTabs() {
+    const allTabs = await chrome.tabs.query({});
+    const tabMap = new Map();
+    allTabs.forEach((tab) => {
+      if (!tabMap.has(tab.url)) {
+        tabMap.set(tab.url, []);
+      }
+      tabMap.get(tab.url).push(tab.id);
+    });
+    return tabMap;
+}
+
 const closeDuplicateTabsButton = document.getElementById("close-duplicates-btn");
 closeDuplicateTabsButton.addEventListener("click", async () => {
   try {
@@ -28,6 +40,26 @@ closeDuplicateTabsButton.addEventListener("click", async () => {
     console.error(error);
   }
 });
-
 const duplicateTabCount = (await getDuplicateTabIds()).length;
-closeDuplicateTabsButton.innerText = `Close duplicate tabs (${duplicateTabCount} duplicates)`;
+closeDuplicateTabsButton.innerText = `Close duplicate tabs (${duplicateTabCount} tabs)`;
+
+const closeAllDuplicateTabsButton = document.getElementById("close-all-duplicates-btn");
+closeAllDuplicateTabsButton.addEventListener("click", async () => {
+  try {
+    const duplicateTabMap = await getAllDuplicateTabs();
+    const tabsToClose = [];
+    duplicateTabMap.forEach((v) => {
+      tabsToClose.push(...v.slice(1));
+    });
+    await chrome.tabs.remove(tabsToClose);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+const duplicateTabMap = await getAllDuplicateTabs();
+let numDuplicateTabs = 0;
+duplicateTabMap.forEach((v) => {
+  numDuplicateTabs += v.length - 1;
+});
+closeAllDuplicateTabsButton.innerText = `Close all duplicate tabs (${numDuplicateTabs} tabs)`;
