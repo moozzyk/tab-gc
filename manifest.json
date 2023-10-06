@@ -4,9 +4,14 @@
   "version": "0.0.1",
   "description": "Tab GC",
   "permissions": [
-    "tabs"
+    "tabs",
+    "notifications"
   ],
   "action": {
     "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
   }
 }
