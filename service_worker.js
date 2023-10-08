@@ -9,3 +9,7 @@ async function updateBadgeText() {
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tabInfo) => {
   await updateBadgeText();
 });
+
+chrome.tabs.onActivated.addListener(async () => {
+  await updateBadgeText();
+});
