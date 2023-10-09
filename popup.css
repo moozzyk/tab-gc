@@ -41,6 +41,12 @@ h1 {
     -moz-transition-duration: .2s;
 }
 
+.suit_and_tie:disabled {
+    color: grey;
+    border: 1px solid grey;
+    background-color: white;
+}
+
 .button-div {
     display: inline-block;
     height: 35px;

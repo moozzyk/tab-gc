@@ -4,11 +4,13 @@ async function updateDuplicateTabCount() {
   const {activeTabDuplicatesCount, allDuplicateTabsCount} = await getDuplicateTabsCount();
   setBadgeText(activeTabDuplicatesCount);
 
-  document.getElementById("close-duplicates-btn").innerText =
-    `Close duplicates of this tab (${activeTabDuplicatesCount} tabs)`;
+  let tabDuplicatesBtn = document.getElementById("close-duplicates-btn");
+  tabDuplicatesBtn.innerText = `Close duplicates of this tab (${activeTabDuplicatesCount} tabs)`;
+  tabDuplicatesBtn.disabled = activeTabDuplicatesCount === 0;
 
-  document.getElementById("close-all-duplicates-btn").innerText =
-    `Close all duplicate tabs (${allDuplicateTabsCount} tabs)`;
+  let allDuplicatesBtn = document.getElementById("close-all-duplicates-btn");
+  allDuplicatesBtn.innerText = `Close all duplicate tabs (${allDuplicateTabsCount} tabs)`;
+  allDuplicatesBtn.disabled = allDuplicateTabsCount === 0;
 }
 
 const closeDuplicateTabsButton = document.getElementById("close-duplicates-btn");
