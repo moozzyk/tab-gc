@@ -1,3 +1,48 @@
 body {
-    width: 20rem;
+    width: 19rem;
+}
+
+h1 {
+    font-family: helvetica;
+    font-weight: 600;
+    font-size: 15px;
+    color: black;
+    padding-bottom: 5px;
+    text-align: center;
+    border-bottom: 2px solid grey;
+}
+
+.suit_and_tie {
+    color: black;
+    font-size: 14px;
+    font-family: helvetica;
+
+    text-decoration: none;
+
+    border: 1px solid black;
+    border-radius: 10px;
+
+    transition-duration: .2s;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+
+    background-color: white;
+    padding: 4px 20px 4px 20px;
+    margin-left: 1rem;
+    width: 17rem;
+}
+
+.suit_and_tie:hover {
+    color: white;
+    background-color: black;
+
+    transition-duration: .2s;
+    -webkit-transition-duration: .11s;
+    -moz-transition-duration: .2s;
+}
+
+.button-div {
+    display: inline-block;
+    height: 35px;
+    text-align: center;
 }

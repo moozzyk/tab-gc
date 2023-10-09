@@ -5,7 +5,7 @@ async function updateDuplicateTabCount() {
   setBadgeText(activeTabDuplicatesCount);
 
   document.getElementById("close-duplicates-btn").innerText =
-    `Close duplicate tabs (${activeTabDuplicatesCount} tabs)`;
+    `Close duplicates of this tab (${activeTabDuplicatesCount} tabs)`;
 
   document.getElementById("close-all-duplicates-btn").innerText =
     `Close all duplicate tabs (${allDuplicateTabsCount} tabs)`;
