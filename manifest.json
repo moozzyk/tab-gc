@@ -2,10 +2,9 @@
   "manifest_version": 3,
   "name": "Tab Garbage Collector",
   "version": "0.0.1",
-  "description": "Tab GC",
+  "description": "Tab Garbage Collection finds duplicate tabs (same URL) and allows you to close them with one click.",
   "permissions": [
-    "tabs",
-    "notifications"
+    "tabs"
   ],
   "action": {
     "default_popup": "popup.html"
@@ -13,5 +12,8 @@
   "background": {
     "service_worker": "service_worker.js",
     "type": "module"
+  },
+  "icons": {
+    "128": "icon128.png"
   }
 }
